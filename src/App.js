@@ -3,8 +3,8 @@ import React from 'react';
 function Food({name, picture }) {
 	return (
 		<div>
-			<h2>I like { name }</h2>
-			<img src={picture} />
+			<h2>I like {name}</h2>
+			<img src={picture} alt={name} />
 		</div>
 	);
 }
@@ -40,8 +40,8 @@ const foodILike = [
 function App() {
   return (
 		<div>
-			{foodILike.map((dish, index) => (
-				<Food name={dish.name} picture={dish.image} key={index} />
+			{foodILike.map(dish => (
+				<Food key={dish.id} name={dish.name} picture={dish.image} />
 			))}
 		</div>
 	);
