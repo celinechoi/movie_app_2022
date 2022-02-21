@@ -1,32 +1,55 @@
 import React from 'react';
 import axios from 'axios';
 import Movie from './Movie';
-// state(객체 형태의 데이터)는 컨포넌트 간에 데이터를 전달하는 역할로, 사용을 위해 함수형 컴포넌트가 아닌 클래스형 컴포넌트(render로 값을 반환)가 있어야 한다.
-class App extends React.Component{
-	state={
+import './App.css';
+
+// state 사용하기 위해 컴포넌트는 클래스형 컴포넌트
+// 그래서 class형 컴포넌트 선언하고 state를 사용하지 않으면 에러뜬다.
+// state 사용이 불필요하면 함수형 컴포넌트로 변경.
+class App extends React.Component {
+	state= {
 		isLoading: true,
 		movies: [],
 	}
-	getMovies= async () => {
-		const { data: { data: {movies} } } = await axios.get('https://yts-proxy.now.sh/list_movies.json?sort_by=rating');
-		// console.log(movies.data.data.movies); // 구조 분해 할당 전,
-		// console.log({movies}) // 구조 분해 할당 후
-		this.setState({isLoading: false, movies: movies});// data update
+	getMovies = async () => {
+		const {
+			data : {
+				data : {
+					movies
+				}
+			}
+		} = await axios.get('https://yts.mx/api/v2/list_movies.json?sort_by=rating');
+		console.log({movies});
+		this.setState({isLoading: false, movies: movies})
 	}
 	componentDidMount(){
 		this.getMovies();
 	}
-	render() {
-		const {isLoading, movies} = this.state
+	render(){
+		const {isLoading, movies} = this.state;
 		return (
-			<div>
+			<section class="container">
 				{
-					isLoading? 'is loading...':movies.map((movie) => {
-						return <Movie key={movie.id} id={movie.id} year={movie.year} title={movie.title} summary={movie.summary} poster={movie.medium_cover_image} />;
-					})
-				}
-			</div>
-		);
+					isLoading? 
+					(
+						<div class="loader">
+							<span class="loader__text">Loading...</span>
+						</div>
+						)
+					:
+					( 
+						<div class="movies">
+						{
+							movies.map((movie) => (
+								<Movie key={movie.id} title={movie.title} year={movie.year} summary={movie.summary} poster={movie.medium_cover_image} />
+							))
+						}
+						</div>
+					)
+			}
+			</section>
+		)
 	}
 }
+
 export default App;

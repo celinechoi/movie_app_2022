@@ -1,19 +1,23 @@
 import React from 'react';
-import Proptypes, { func } from 'prop-types'
-
-// 클래스형 컴포넌트
-// class Moive extends React.Component {}
-
+import Proptypes from 'prop-types';
+import './Movie.css'
 // 함수형 컴포넌트
-function Moive({id, title, year, summary, poster}){
-	return(<div>{title}</div>);
+function Movie({title, year, summary, poster}) {
+	return (
+		<div class="movie">
+			<img src={poster} alt={title} />
+			<div class="movie__data">
+				<h3 class="movie__title" style={{backgroundColor: 'red'}}>{title}</h3>
+				<h5 class="movie__year">{year}</h5>
+				<p class="movie__summary">{summary}</p>		
+			</div>
+		</div>
+	)
 }
-
-Moive.propTypes = {
-	id: Proptypes.number.isRequired,
-	year: Proptypes.number.isRequired,
+Movie.prototype = {
 	title: Proptypes.string.isRequired,
+	year: Proptypes.number.isRequired,
 	summary: Proptypes.string.isRequired,
 	poster: Proptypes.string.isRequired
 }
-export default Moive;
+export default Movie;
