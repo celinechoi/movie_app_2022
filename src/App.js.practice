@@ -1,0 +1,43 @@
+import React from 'react';
+import axios from 'axios';
+
+/* 컴포넌트 종류
+* 클래스형 컴포넌트 : render()로 출력 
+* 함수형 컴포넌트 : return()로 출력
+*/
+
+/*
+* 컴포넌트 생명주기
+* 마운트 : constructor(); render(); componentDidMount();
+* 업데이트 : componentDidUpdate();
+* 언마운트 : componentWillUnmount(); 
+*/
+
+/*
+* data를 컴포넌트간 전달하는 역할(data 저장) state
+* data 업데이트 하는 역할 setState
+*/
+
+class App extends React.Component {
+	// 데이터 저장
+	state= {
+		isLoading: true,
+		movies: [],
+	}
+	getMoives = async () => {
+		const {
+			data: {
+				data: {movies: movies},
+			}
+		} = await axios.get('https://yts-proxy.now.sh/list_movies.json');
+		this.setState({movies, isLoading: false}) // data update
+	}
+	componentDidMount() {
+		this.getMoives();
+	}
+	render(){
+		const {isLoading} = this.state;
+		return <div>{isLoading? 'Loading...': 'We are ready!'}</div>
+	}
+}
+export default App;
