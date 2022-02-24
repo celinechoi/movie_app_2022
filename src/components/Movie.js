@@ -6,7 +6,7 @@ import {Link} from 'react-router-dom';
 function Movie({title, year, poster, summary, genres}) {
 	return (
 		<div className='movie'>
-			<Link to={{ pathname: '/moive-detail', state:{ year, title, summary, poster, genres } }}>
+			<Link to={{ pathname: '/movie-detail', state:{ year, title, summary, poster, genres } }}>
 				<img src={poster} alt={title} title={title} />
 				<div className='movie__data'>
 					<h3 className='movie__title'>{title}</h3>

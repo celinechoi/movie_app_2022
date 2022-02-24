@@ -1,8 +1,22 @@
 import React from 'react';
 
-function Detail(props) {
-	console.log(props);
-	return <span>hello</span>;
+
+class Detail extends React.Component {
+	// state= {}
+	componentDidMount() {
+		const {history, location} = this.props;
+		if(location.state === undefined) {
+			history.push('/');
+		}
+	}
+	render() {
+		const {location} = this.props;
+		if(location.state){
+			return <span>{location.state.title}</span>;
+		} else {
+			return null;
+		}
+	}
 }
 
 export default Detail;
